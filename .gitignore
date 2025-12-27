@@ -20,4 +20,9 @@
 /coverage
 
 **/.DS_Store
-lib
+lib/*
+out
+.gitmodules
+forge-std
+foundry.lock
+lib/forge-std

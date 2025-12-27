@@ -6,11 +6,11 @@ MetaNFTAuction由管理员开启拍卖,bidder必须固定使用eth或者usdc参�
 1. 合约升级参考文档地址为
 合约升级
 2. sepolia已部署合约地址参考igniton/deployments/deployed_addresses.json
-3. sepolia使用configvarialbe设置环境变量SEPOLIA_RPC_URL,SEPOLIA_PRIVATE_KEY,SEPOLIA_ETHERSCAN_API_KEY参考
-use configvariable
-4. 测试合约
+3. 测试合约
+npm install
+forge install foundry-rs/forge-std
 forge test --match-contract MetaNFTAuction --fork-url https://sepolia.infura.io/v3/123 -vvv   
-5. 查看覆盖率
+4. 查看覆盖率
 forge coverage --match-contract MetaNFTAuction --fork-url https://sepolia.infura.io/v3/123 -vvv
 ╭--------------------------------+-----------------+-----------------+----------------+---------------╮
 | File                           | % Lines         | % Statements    | % Branches     | % Funcs       |
@@ -23,7 +23,10 @@ forge coverage --match-contract MetaNFTAuction --fork-url https://sepolia.infura
 |--------------------------------+-----------------+-----------------+----------------+---------------|
 | Total                          | 38.33% (69/180) | 37.65% (64/170) | 28.42% (27/95) | 36.00% (9/25) |
 ╰--------------------------------+-----------------+-----------------+----------------+---------------╯
-6. 部署并验证
+5. 部署并验证
+sepolia使用configvarialbe设置环境变量SEPOLIA_RPC_URL,SEPOLIA_PRIVATE_KEY,SEPOLIA_ETHERSCAN_API_KEY参考
+use configvariable
 npx hardhat ignition deploy ignition/modules/MetaNFTAuctionProxyModule.ts --network sepolia --verify
 npx hardhat ignition deploy ignition/modules/MetaNFTAuctionUpgradeModule.ts --network sepolia --verify
 
+---

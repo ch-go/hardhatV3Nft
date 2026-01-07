@@ -104,7 +104,7 @@ contract MetaNFTAuction is Initializable {
             }
             uint256 price = getPriceInDollar(bidMethod);
             bidPrice = _toUsd(msg.value, 18, price);
-            auction.highestBid = msg.value;
+            auction.highestBid = bidPrice;
         } else {
             // 设置为token
             require(allowance > 0, "invalid payment");

@@ -61,6 +61,9 @@ contract MetaNFTAuction is Initializable {
         require(nft != address(0), "invalid nft");
         require(duration >= 30, "invalid duration");
         require(paymentToken != address(0), "invalid payment token");
+        // 转移NFT到合约
+        IERC721(nft).transferFrom(seller, address(this), nftId);
+        
         auctions[auctionId] = Auction({
             end: false,
             nft: IERC721(nft),
@@ -151,6 +154,19 @@ contract MetaNFTAuction is Initializable {
         Auction storage auction = auctions[auctionId_];
         require(!auction.end, "ended");
         auction.end = true;
+        // 转移NFT给最高出价者
+        if (auction.highestBidder != address(0)) {
+            auction.nft.transferFrom(address(this), auction.highestBidder, auction.nftId);
+            // 支付给卖家
+            if (bidMethods[auctionId_][auction.highestBidder] == 1) {
+                auction.seller.transfer(auction.highestBid);
+            } else {
+                IERC20(address(auction.paymentToken)).transferFrom(address(this), auction.seller, auction.highestBid);
+            }
+        } else {
+            // 没有人出价，退还NFT给卖家
+            auction.nft.transferFrom(address(this), auction.seller, auction.nftId);
+        }
         emit EndBid(auctionId_);
     }
 

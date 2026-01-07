@@ -132,6 +132,7 @@ contract MetaNFTAuction is Initializable {
         Auction storage auction = auctions[auctionId_];
         // 结束才能提款
         require(block.timestamp >= auction.startingTime + auction.duration, "not ended");
+        require(msg.sender != auction.highestBidder, "winner can not withdraw");
         uint256 bidMethod = bidMethods[auctionId_][msg.sender];
         uint256 bal = bids[auctionId_][msg.sender];
         bids[auctionId_][msg.sender] = 0;
